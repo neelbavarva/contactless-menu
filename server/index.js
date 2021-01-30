@@ -46,6 +46,11 @@ app.get('/', (req, res) => {
     res.send("Hello 11th Hour");
 });
 
+
+
+
+
+
 /************   User    ****************/
 
 // '/getMenu/:id'   GET
@@ -94,6 +99,9 @@ app.post('/placeOrder', async (req, res) => {
 
 /************   User-End    ****************/
 
+
+
+
 /************   Owner    ****************/
 
 // GetOrders
@@ -104,6 +112,19 @@ app.get('/getOrders/:id', async (req, res) => {
     console.log(saareKaam);
 
     res.send(saareKaam);
+});
+
+app.delete('/deleteOrder/:id', async (req,res) => {
+    const id = req.params.id;
+    
+    let order = await AllOrders.findByIdAndDelete(id);
+    
+    if(!order) {       // Not existing, return 404
+        res.status(404).send('The course with the given id was not found');
+        return;
+    }
+
+    res.send(order);
 });
 
 // Login
@@ -137,6 +158,9 @@ app.get('/login/:id', async (req, res) => {
 })
 
 /************   Owner-End    ****************/
+
+
+
 
 async function createRestaurant() {
     const restaurant = new Restaurants({
@@ -172,7 +196,7 @@ async function createItem() {
 }
 //createItem();
 
-/************   Owner-End    ****************/
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}..`));
