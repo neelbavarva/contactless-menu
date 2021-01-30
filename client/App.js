@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Home from './screens/Home'
 import Menu from './screens/Menu'
 import Cart from './screens/Cart'
+import AddItem from './screens/Owner/AddItem'
+import Orders from './screens/Owner/Orders'
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
@@ -25,7 +27,7 @@ export default function App() {
   
   return (
     <ScrollView>
-      <Menu />
+      <Orders />
     </ScrollView>
   );
 }
