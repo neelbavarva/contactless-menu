@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image , TextInput} from 'react-native';
 
 
-export default function Order( { orders }) {
+export default function Order( { orders, deleteItemButtonHandler }) {
 
     "Whopper x2,Paneer Overload x1"
     
@@ -48,6 +48,10 @@ export default function Order( { orders }) {
 
                             <TouchableOpacity 
                                 style={{paddingTop: 10,marginTop: 10, marginBottom: 20, margin: 10}}
+                                onPress={() => {
+                                    console.log(item);
+                                    deleteItemButtonHandler(item._id);
+                                }}
                             >
                                 <View style={{
                                     backgroundColor: "#222222",

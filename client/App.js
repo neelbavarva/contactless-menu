@@ -1,11 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Home from './screens/Home'
 import Menu from './screens/Menu'
-import Cart from './screens/Cart'
-import AddItem from './screens/Owner/AddItem'
-import Orders from './screens/Owner/Orders'
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import * as myConstClass from './HttpLink';
@@ -36,14 +32,14 @@ export default function App() {
 
 	const fetchMenuCard = () =>{
 		console.log("Inside FetchMenuCard");
-        fetch(`${myConstClass.HTTP_LINK}/getMenu/${qrCode_url}`)
-        .then(res=>res.json())
-        .then(results=>{
-			console.log("Menu-card ka data is received.", ...results);
-
-			setMenuCard([...results]);
-			console.log("This is Menu-card1 :-",...menuCard);
-		})
+        if(qrCode_url) {
+			fetch(`${myConstClass.HTTP_LINK}/getMenu/${qrCode_url}`)
+			.then(res=>res.json())
+			.then(results=>{
+				console.log("Menu-card ka data is received.", ...results);
+				setMenuCard([...results]);
+			})
+		}
         return 1;
 	}
 	
@@ -58,7 +54,7 @@ export default function App() {
 			setViewMode("menu");
 			console.log("After timeout");
 			console.log("This is Menu-card2 :-",...menuCard);
-		}, 5000);
+		}, 2000);
 	}
 
 	const ConfirmOrderButtonHandler = () => {
@@ -71,7 +67,7 @@ export default function App() {
 		.then(res=>res.json())
 		.then(results => {
 			if(results._id === -1) {
-				Alert.alert("Restaurant not found, #404. Try Again. (BHadwe register kar)");
+				Alert.alert("Restaurant not found, #404. Try Again.");
 			} else {
 				setOwnerId(results._id);
 				setUser('owner');

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-
 export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
 
     const [image, setImage] = useState(null);
@@ -11,12 +10,12 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
 
     useEffect(() => {
         (async () => {
-        if (Platform.OS !== 'web') {
-            const { status } = await ImagePicker.requestCameraPermissionsAsync();
-            if (status !== 'granted') {
-            Alert.alert('Sorry, we need camera roll permissions to make this work!');
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestCameraPermissionsAsync();
+                if (status !== 'granted') {
+                Alert.alert('Sorry, we need camera roll permissions to make this work!');
+                }
             }
-        }
         })();
 
         LogBox.ignoreLogs(['Functions are not valid as a React child']);
@@ -46,7 +45,7 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
                   name:`test.${name[3]}`
                 }
 
-                setIdData("6015483f3ebd2f8a415a8952");
+                setIdData("60154892d9bd758ac9a36d63");
             }
         } else {
             Alert.alert('Access denied')
@@ -90,7 +89,7 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
                                 justifyContent: 'center'
                             }}
                         >
-                            <Text style={{ marginLeft: 0, fontSize: 16, fontFamily: 'GothamMedium', lineHeight: 22, color: "black" }}>App ka Name</Text>
+                            <Text style={{ marginLeft: 0, fontSize: 16, fontFamily: 'GothamMedium', lineHeight: 22, color: "black" }}>Cafe 29</Text>
                         </View>
                     </TouchableOpacity>
 

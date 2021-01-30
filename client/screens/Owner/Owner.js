@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image , TextInput, LogBox} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image , TextInput, LogBox, Alert} from 'react-native';
 import Orders from './Orders'
 import AddItem from './AddItem'
 import Support from './Support'
@@ -26,6 +26,30 @@ export default function Owner({ownerId}) {
         fetchOrders(),
         LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     },[])
+
+    const deleteItemButtonHandler = (id) => {
+        console.log("Konsi id ja rhi hai :-", id);
+        fetch(`${myConstClass.HTTP_LINK}/deleteOrder/${id}`,{
+            method:"delete",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                id: id
+            })
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            Alert.alert(`Selected Order has been deleted`)
+        })
+        .then(() => {
+            fetchOrders();
+        })
+        .catch(err=>{
+            Alert.alert("Some Error while Deleting the Order...")
+            console.log(err.message);
+        });
+    }
 
     return (
         <View>
@@ -97,7 +121,7 @@ export default function Owner({ownerId}) {
                     </View>
                 </View>  
 
-                {viewMode === "orders" && <Orders orders={orders} />}
+                {viewMode === "orders" && <Orders orders={orders} deleteItemButtonHandler={deleteItemButtonHandler} />}
                 {viewMode === "add" && <AddItem />}
                 {viewMode === "support" && <Support />}
         </View>
