@@ -97,7 +97,7 @@ export default function Owner({ownerId}) {
                     </View>
                 </View>  
 
-                {viewMode === "orders" && <Orders />}
+                {viewMode === "orders" && <Orders orders={orders} />}
                 {viewMode === "add" && <AddItem />}
                 {viewMode === "support" && <Support />}
         </View>

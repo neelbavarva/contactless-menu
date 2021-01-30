@@ -118,12 +118,11 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
 
 
             <Image style={{
-                width: 250,
-                height: 250,
-                alignSelf: "center",
-                marginTop: 30, 
+                width: 270,
+                height: 270,
+                alignSelf: "center", 
                 marginBottom: 30
-            }} source={require('../assets/qr.png')}  />
+            }} source={require('../assets/images/qr_code.gif')}  />
 
             <TouchableOpacity 
                 style={{paddingTop: 10,marginTop: 10, marginBottom: 40, margin: 10}}

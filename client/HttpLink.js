@@ -1,2 +1,2 @@
 // idhar ngrok ki link ayegi!!
-export const HTTP_LINK = "https://7d8fd7e44106.ngrok.io"
+export const HTTP_LINK = "https://01b04d0fdc3c.ngrok.io"
