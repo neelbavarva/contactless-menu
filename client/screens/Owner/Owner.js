@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image , TextInput} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image , TextInput, LogBox} from 'react-native';
 import Orders from './Orders'
 import AddItem from './AddItem'
 import Support from './Support'
+import * as myConstClass from '../../HttpLink';
 
-
-export default function Owner() {
+export default function Owner({ownerId}) {
 
     const [viewMode, setViewMode] = useState("orders");
-
+    const [orders, setOrders] = useState([]);
     
+    const fetchOrders = () => {
+        fetch(`${myConstClass.HTTP_LINK}/getOrders/${ownerId}`)
+        .then(res=>res.json())
+        .then(results=>{
+            console.log(JSON.stringify(results));
+            console.log("All Orders received.");
+            setOrders(results)
+        }).catch(err=>{
+            console.log("Yo Bitch, got Error while receiving categoriesData in Home.js\n"+err)
+        })
+    }
 
     useEffect(()=>{
-        // fetchCategory(),
-        // fetchData(),
-        // fetchExpense(),
-        // LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+        fetchOrders(),
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
     },[])
 
     return (
