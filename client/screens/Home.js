@@ -14,13 +14,31 @@ export default function Home() {
             }} source={require('../assets/qr.png')}  />
 
             <TouchableOpacity 
-                style={{paddingTop: 10,marginTop: 10, marginBottom: 20, margin: 10}}
+                style={{paddingTop: 10,marginTop: 10, marginBottom: 40, margin: 10}}
                 
             >
                 <View style={styles.button}>
                     <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Scan QR code</Text>
                 </View>
             </TouchableOpacity>
+
+            <View style={{borderBottomWidth: 1, borderBottomColor: "black", marginHorizontal: 50, marginBottom: 20}} />
+            <Text style={{color: "red", textAlign: "center", fontFamily: 'GothamMedium'}}>For Shop owner use only*</Text>
+            {/* Shop ID Button */}
+            <TouchableOpacity 
+                style={{paddingTop: 10,marginTop: 20, marginBottom: 20, margin: 10}}
+                
+            >
+                <View style={{
+                    backgroundColor: "gray",
+                    padding: 12,
+                    borderRadius: 6,
+                }}>
+                    <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Login with shop ID</Text>
+                </View>
+            </TouchableOpacity>
+
+
         </View>
     );
 }
