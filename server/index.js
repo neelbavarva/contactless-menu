@@ -24,13 +24,17 @@ const itemSchema = new mongoose.Schema({
 })
 
 const Orders = new mongoose.Schema({
+    restaurantId: String,
     tableNo: Number,
-    cart: String
+    items: String,
+    totalAmount: Number   
 })
 
 const Restaurants = mongoose.model('Restaurants', restaurantSchema);
 
 const AllItems = mongoose.model('AllMenuItems', itemSchema);
+
+const AllOrders = mongoose.model('AllOrders', Orders);
 
 app.use(express.json());
 app.use(helmet());  //secures the page by adding various http headers
@@ -55,8 +59,35 @@ app.get('/getMenu/:id', async (req, res) => {
 });
 
 // '/placeOrder'    POST 
-app.post('/placeOrder', (req, res) => {
+app.post('/placeOrder', async (req, res) => {
     console.log(JSON.stringify(req.body));
+
+    // restaurantId: String,
+    // tableNo: Number,
+    // items: String,
+    // totalAmount: Number
+    let totAmo = 0, itms = [], tableNo = req.body.tableNo;
+    for(let i=0 ; i<req.body.cart.length ; i++) {
+        totAmo += (req.body.cart[i].price)*(req.body.cart[i].quantity);
+        itms[i] = req.body.cart[i].name + " x"+req.body.cart[i].quantity;
+    }
+
+    console.log({totAmo, itms, tableNo});
+
+    const order = new AllOrders({
+        restaurantId: req.body.cart[0].restaurantId,
+        tableNo: tableNo,
+        items: itms.toString(),
+        totalAmount: totAmo
+    })
+
+    try{
+        const result = await order.save();
+        console.log(result);
+    } catch(e) {
+        for(field in e.errors)
+            console.log("Yaha error1!! :-"+e.errors[field].message);
+    }
 
     res.send("accepted");
 })
@@ -64,13 +95,46 @@ app.post('/placeOrder', (req, res) => {
 /************   User-End    ****************/
 
 /************   Owner    ****************/
-// CreateOwner
 
-// CreateMenu
+// GetOrders
+app.get('/getOrders/:id', async (req, res) => {
+    const id = req.params.id;
+    
+    const saareKaam = await AllOrders.find({ restaurantId: id });
+    console.log(saareKaam);
 
-// CreateItem
+    res.send(saareKaam);
+});
 
-// EditItem
+// Login
+app.get('/login/:id', async (req, res) => {
+    const id = req.params.id;
+
+    let isFound = true;
+
+    const restaus = await Restaurants.findById(id)
+                                     .catch(e => {
+                                        console.log(e.message);
+                                        //res.status(404);
+                                        isFound = false;
+                                     });
+    
+    if(isFound) {
+        console.log("User is there");
+        res.send(restaus);
+    } else {
+        res.send({
+            _id: -1
+        })
+    }
+
+    // if(!restaus) {       // 404 Not found
+    //     res.status(404);//.send('The Restaurant with the given id was not found');
+    // } else {
+    //     console.log("User is there");
+    //     res.send(restaus);
+    // }
+})
 
 /************   Owner-End    ****************/
 

@@ -3,11 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert, TextInp
 import * as ImagePicker from 'expo-image-picker';
 
 
-export default function Home({GoToMenuButtonHandler}) {
+export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
 
     const [image, setImage] = useState(null);
-    const [scannedData, setScannedData] = useState(false); 
     const [idData, setIdData] = useState(null);
+    const [restaurantId, setRestaurantId] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -46,7 +46,7 @@ export default function Home({GoToMenuButtonHandler}) {
                   name:`test.${name[3]}`
                 }
 
-                setIdData("60154892d9bd758ac9a36d63");
+                setIdData("6015483f3ebd2f8a415a8952");
             }
         } else {
             Alert.alert('Access denied')
@@ -169,14 +169,15 @@ export default function Home({GoToMenuButtonHandler}) {
                     marginHorizontal: 10
                 }}
                 placeholder="694.20" 
-                // value={amount}
-                // onChangeText={text => setAmount(text)}
+                value={restaurantId}
+                onChangeText={text => setRestaurantId(text)}
             />
             {/* Shop ID Button */}
             <TouchableOpacity 
                 style={{paddingTop: 10,marginTop: 20, marginBottom: 20, margin: 10}}  
                 onPress = {() => {
                     console.log("Login with Shop id button is Pressed!!");
+                    LoginButtonHandler(restaurantId);
                 }} 
             >
                 <View style={{

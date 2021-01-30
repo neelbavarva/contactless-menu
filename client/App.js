@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import Home from './screens/Home'
 import Menu from './screens/Menu'
 import Cart from './screens/Cart'
@@ -9,13 +9,16 @@ import Orders from './screens/Owner/Orders'
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import * as myConstClass from './HttpLink';
+import Owner from './screens/Owner/Owner';
 
 export default function App() {
 
-  	const [viewMode, setViewMode] = useState("scan");
+	const [viewMode, setViewMode] = useState("scan");
+	const [user, setUser] = useState("customer");
 	const [qrCode_url, setQrCode_url] = useState(null);
 	const [menuCard, setMenuCard] = useState([]);
 	const [Cart, setCart] = useState([]);
+	const [ownerId, setOwnerId] = useState();
 
 	let [fontsLoaded] = useFonts({
 			'GothamBlack': require('./assets/fonts/Gotham-Black.otf'),
@@ -58,22 +61,30 @@ export default function App() {
 		}, 5000);
 	}
 
-	const ViewCartButtonHandler = (cart) => {
-		
-		console.log("Inside ViewCartButtonHandler");
-		setCart(cart);
-		setTimeout(() => {
-			console.log("this is CCart :- ", ...Cart);
-			setViewMode("cart");
-			console.log("After timeout");
-		}, 5000);
+	const ConfirmOrderButtonHandler = () => {
+		setViewMode("scan");
+	}
+
+	const LoginButtonHandler = (id) => {
+		console.log(id);
+		fetch(`${myConstClass.HTTP_LINK}/login/${id}`)
+		.then(res=>res.json())
+		.then(results => {
+			if(results._id === -1) {
+				Alert.alert("Restaurant not found, #404. Try Again. (BHadwe register kar)");
+			} else {
+				setOwnerId(results._id);
+				setUser('owner');
+			}
+		})
+        .catch(e => console.log(e));		
 	}
 
 	return (
 		<ScrollView>
-			{viewMode == "scan" && <Home GoToMenuButtonHandler={GoToMenuButtonHandler} />}
-			{viewMode == "menu" && <Menu menuCard={menuCard} ViewCartButtonHandler={ViewCartButtonHandler} />}
-			{viewMode == "cart" && <Cart Cart={Cart} />}
+			{viewMode === "scan" && user == "customer" && <Home GoToMenuButtonHandler={GoToMenuButtonHandler} LoginButtonHandler={LoginButtonHandler} />}
+			{viewMode === "menu" && user == "customer" && <Menu menuCard={menuCard} ConfirmOrderButtonHandler={ConfirmOrderButtonHandler} />}
+			{user == "owner" && <Owner ownerId={ownerId} />}
 		</ScrollView>
 	);
 }

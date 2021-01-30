@@ -9,6 +9,15 @@ export default function Owner() {
 
     const [viewMode, setViewMode] = useState("orders");
 
+    
+
+    useEffect(()=>{
+        // fetchCategory(),
+        // fetchData(),
+        // fetchExpense(),
+        // LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    },[])
+
     return (
         <View>
         <View style={{ flex: 1, justifyContent: 'center', padding: 24, marginTop: 30, marginBottom: 20}}>
@@ -79,9 +88,9 @@ export default function Owner() {
                     </View>
                 </View>  
 
-                    {viewMode === "orders" && <Orders />}
-                    {viewMode === "add" && <AddItem />}
-                    {viewMode === "support" && <Support />}
+                {viewMode === "orders" && <Orders />}
+                {viewMode === "add" && <AddItem />}
+                {viewMode === "support" && <Support />}
         </View>
     );
 }

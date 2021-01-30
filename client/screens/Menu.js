@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert, TextInput } from 'react-native';
 import * as myConstClass from '../HttpLink';
 
-export default function Menu({menuCard, ViewCartButtonHandler}) {
+export default function Menu({menuCard, ConfirmOrderButtonHandler}) {
 
     const [names, setNames] = useState([]);
     const [cart, setCart] = useState([]);
     const [viewMode, setViewMode] = useState("menu");
+    const [tableNo, setTableNo] = useState();
 
     const menu_items = [...menuCard];
 
@@ -26,7 +27,7 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                 backgroundColor: null, 
                                 borderRadius: 6,
                             }}
-                            
+                            onPress={ConfirmOrderButtonHandler}
                         >
                             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center',marginRight: 20, justifyContent: 'center' }}>
                             <Image 
@@ -46,7 +47,6 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                 margin: 5,
                                 borderRadius: 8,
                             }}
-                            // onPress={() => NavbarButtonHandler("chart")}
                         >
                             <View
                                 style={{
@@ -68,9 +68,9 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                 borderRadius: 8,
                             }}
                             onPress={() => {
-                                //console.log(JSON.stringify(cart));
-                                //ViewCartButtonHandler(cart);
-                                setViewMode("cart");
+                                if(cart.length>0) {
+                                    setViewMode("cart");
+                                }
                             }}
                         >
                             <View
@@ -135,7 +135,8 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                             let obj = {
                                                 name: item.name,
                                                 price: item.price,
-                                                quantity: item.quantity
+                                                quantity: item.quantity,
+                                                restaurantId: item.restaurantId
                                             }
                                             cart.push(obj);
                                         }
@@ -200,7 +201,9 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                 backgroundColor: null, 
                                 borderRadius: 6,
                             }}
-                            
+                            onPress={() => {
+                                setViewMode("menu")
+                            }}
                         >
                             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center',marginRight: 20, justifyContent: 'center' }}>
                             <Image 
@@ -304,7 +307,8 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                             const obj = {
                                                 name: cart[i].name,
                                                 price: cart[i].price,
-                                                quantity: cart[i].quantity+1
+                                                quantity: cart[i].quantity+1,
+                                                restaurantId: cart[i].restaurantId
                                             }
                                             newCart.push(obj);
                                         } else {
@@ -335,7 +339,8 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                                             const obj = {
                                                 name: cart[i].name,
                                                 price: cart[i].price,
-                                                quantity: cart[i].quantity-1
+                                                quantity: cart[i].quantity-1,
+                                                restaurantId: cart[i].restaurantId
                                             }
                                             newCart.push(obj);
                                         } else {
@@ -377,6 +382,22 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                 )
             })}
             {/* Idhar Total Print karne ka hai !!!*/}
+            <TextInput 
+                style={{
+                    backgroundColor: "white",
+                    borderWidth: 1,
+                    borderColor: "#D1D1D1",
+                    borderRadius: 5,
+                    padding: 10,
+                    marginTop: 28,
+                    fontFamily: 'GothamLight', 
+                    fontSize: 14,
+                    marginHorizontal: 10
+                }}
+                placeholder="694.20" 
+                value={tableNo}
+                onChangeText={text => setTableNo(text)}
+            />
             <TouchableOpacity 
                 style={{paddingTop: 10,marginTop: 10, marginBottom: 20, margin: 10}}
                 onPress={() => {
@@ -387,14 +408,18 @@ export default function Menu({menuCard, ViewCartButtonHandler}) {
                         headers:{
                             'Content-Type':'application/json'
                         },
-                        body:JSON.stringify(cart)
+                        body:JSON.stringify({
+                            cart: cart,
+                            tableNo: parseInt(tableNo)
+                        })
                     })
-                    .then(res=>res.json())
                     .then(data=>{
-                        console.log('Step 1');
+                        console.log('Successfully done!!');
+                        Alert.alert("Your Order is placed Successfully!");
+                        ConfirmOrderButtonHandler();
                     })
                     .catch(err=>{
-                        Alert.alert('Step 2');
+                        Alert.alert('Some Error Occured..., please Retry');
                         console.log(err);
                     })
                 }}        
