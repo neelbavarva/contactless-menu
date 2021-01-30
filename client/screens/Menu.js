@@ -69,7 +69,10 @@ export default function Menu() {
                                 margin: 5,
                                 borderRadius: 8,
                             }}
-                            // onPress={() => NavbarButtonHandler("add")}
+                            onPress={() => {
+                                // NavbarButtonHandler("add")
+                                console.log(JSON.stringify(cart));
+                            }}
                         >
                             <View
                                 style={{
@@ -186,11 +189,10 @@ export default function Menu() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 });

@@ -8,10 +8,11 @@ import AddItem from './screens/Owner/AddItem'
 import Orders from './screens/Owner/Orders'
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import * as myConstClass from './HttpLink';
 
 export default function App() {
 
-  	const [viewMode, setviewMode] = useState("scan");
+  	const [viewMode, setViewMode] = useState("scan");
 
 	let [fontsLoaded] = useFonts({
 			'GothamBlack': require('./assets/fonts/Gotham-Black.otf'),
@@ -26,6 +27,16 @@ export default function App() {
 	if (!fontsLoaded) {
 		return <AppLoading />;
 	}
+
+	const fetchMenuCard = () =>{
+        fetch(`${myConstClass.HTTP_LINK}/getMenu/${qrCode_url}`)
+        .then(res=>res.json())
+        .then(results=>{
+			console.log("Menu-card ka data received.");
+            console.log(results);
+        })
+        return 1;
+    }
   
 	return (
 		<ScrollView>
