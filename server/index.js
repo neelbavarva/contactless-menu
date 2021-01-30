@@ -18,8 +18,14 @@ const restaurantSchema = new mongoose.Schema({
 const itemSchema = new mongoose.Schema({
     name: String,
     price: Number,
+    quantity: Number,
     restaurantId: String,
     imgUrl: String,
+})
+
+const Orders = new mongoose.Schema({
+    tableNo: Number,
+    cart: String
 })
 
 const Restaurants = mongoose.model('Restaurants', restaurantSchema);
@@ -50,7 +56,7 @@ app.get('/getMenu/:id', async (req, res) => {
 
 // '/placeOrder'    POST 
 app.post('/placeOrder', (req, res) => {
-    console.log(req.body.cart);
+    console.log(JSON.stringify(req.body));
 
     res.send("accepted");
 })
@@ -85,9 +91,10 @@ async function createRestaurant() {
 
 async function createItem() {
     const item = new AllItems({
-        name: "Paneer Overload",
-        price: 179,
-        restaurantId: "60154892d9bd758ac9a36d63",
+        name: "American Supreme",
+        price: 145,
+        quantity: 1,
+        restaurantId: "6015483f3ebd2f8a415a8952",
         imgUrl: "abcdes"
     })
 

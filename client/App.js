@@ -13,6 +13,9 @@ import * as myConstClass from './HttpLink';
 export default function App() {
 
   	const [viewMode, setViewMode] = useState("scan");
+	const [qrCode_url, setQrCode_url] = useState(null);
+	const [menuCard, setMenuCard] = useState([]);
+	const [Cart, setCart] = useState([]);
 
 	let [fontsLoaded] = useFonts({
 			'GothamBlack': require('./assets/fonts/Gotham-Black.otf'),
@@ -29,20 +32,48 @@ export default function App() {
 	}
 
 	const fetchMenuCard = () =>{
+		console.log("Inside FetchMenuCard");
         fetch(`${myConstClass.HTTP_LINK}/getMenu/${qrCode_url}`)
         .then(res=>res.json())
         .then(results=>{
-			console.log("Menu-card ka data received.");
-            console.log(results);
-        })
+			console.log("Menu-card ka data is received.", ...results);
+
+			setMenuCard([...results]);
+			console.log("This is Menu-card1 :-",...menuCard);
+		})
         return 1;
-    }
+	}
+	
+
+	/********* Button Handlers *********/
   
+	const GoToMenuButtonHandler = (id) => {
+		setQrCode_url(id);
+		fetchMenuCard();
+		
+		setTimeout(() => {
+			setViewMode("menu");
+			console.log("After timeout");
+			console.log("This is Menu-card2 :-",...menuCard);
+		}, 5000);
+	}
+
+	const ViewCartButtonHandler = (cart) => {
+		
+		console.log("Inside ViewCartButtonHandler");
+		setCart(cart);
+		setTimeout(() => {
+			console.log("this is CCart :- ", ...Cart);
+			setViewMode("cart");
+			console.log("After timeout");
+		}, 5000);
+	}
+
 	return (
 		<ScrollView>
-			{viewMode == "scan" && <Home />}
-			{viewMode == "menu" && <Menu />}
-			{viewMode == "cart" && <Cart />}
+			{viewMode == "scan" && <Home GoToMenuButtonHandler={GoToMenuButtonHandler} />}
+			{viewMode == "menu" && <Menu menuCard={menuCard} ViewCartButtonHandler={ViewCartButtonHandler} />}
+			{viewMode == "cart" && <Cart Cart={Cart} />}
 		</ScrollView>
 	);
 }

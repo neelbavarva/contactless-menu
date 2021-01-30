@@ -2,19 +2,9 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 
-export default function Cart() {
+export default function Cart({Cart}) {
 
-    const menu_items = [  
-        {"name":"pizza", "price":"100", "amount":"1"},  
-        {"name":"Burger", "price":"50", "amount":"1"},
-        {"name":"Coffee", "price":"60", "amount":"1"},  
-        {"name":"Hash brown", "price":"30", "amount":"1"}   
-    ]  
-
-
-    const [name, setName] = useState([]);
-    const [price, setPrice] = useState([]);
-    const [amount, setAmount] = useState([]);
+    const menu_items = [...Cart]; 
 
     return (
         <View>
@@ -87,8 +77,6 @@ export default function Cart() {
                         </TouchableOpacity>
                     </View>
                 </View>
-
-
 
                 {menu_items.map(item => {
                 return(

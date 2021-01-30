@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert } from '
 import * as ImagePicker from 'expo-image-picker';
 
 
-export default function Home() {
+export default function Home({GoToMenuButtonHandler}) {
 
     const [image, setImage] = useState(null);
     const [scannedData, setScannedData] = useState(false); 
+    const [idData, setIdData] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -44,6 +45,8 @@ export default function Home() {
                   type:`test/${name[3]}`,
                   name:`test.${name[3]}`
                 }
+
+                setIdData("60154892d9bd758ac9a36d63");
             }
         } else {
             Alert.alert('Access denied')
@@ -133,6 +136,22 @@ export default function Home() {
                     <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Scan QR code</Text>
                 </View>
             </TouchableOpacity>
+
+            {idData ? (
+                <TouchableOpacity 
+                    style={{paddingTop: 10,marginTop: 10, marginBottom: 40, margin: 10}}
+                    onPress = {() => {
+                        console.log("Go to Menu button is Pressed!!");
+                        GoToMenuButtonHandler(idData);
+                    }} 
+                >
+                    <View style={styles.button}>
+                        <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Go to Menu</Text>
+                    </View>
+                </TouchableOpacity>
+            ) : (
+                <View />
+            )}
 
             <View style={{borderBottomWidth: 1, borderBottomColor: "black", marginHorizontal: 50, marginBottom: 20}} />
             <Text style={{color: "red", textAlign: "center", fontFamily: 'GothamMedium'}}>For Shop owner use only*</Text>
