@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Home from './screens/Home'
 import Menu from './screens/Menu'
-import Orders from './screens/Orders'
+import Cart from './screens/Cart'
 import {useFonts} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
@@ -24,9 +24,9 @@ export default function App() {
   }
   
   return (
-    <View>
-      <Orders />
-    </View>
+    <ScrollView>
+      <Menu />
+    </ScrollView>
   );
 }
 
