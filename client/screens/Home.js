@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 
@@ -156,6 +156,22 @@ export default function Home({GoToMenuButtonHandler}) {
             <View style={{borderBottomWidth: 1, borderBottomColor: "black", marginHorizontal: 50, marginBottom: 20}} />
             <Text style={{color: "red", textAlign: "center", fontFamily: 'GothamMedium'}}>For Shop owner use only*</Text>
             
+            <TextInput 
+                style={{
+                    backgroundColor: "white",
+                    borderWidth: 1,
+                    borderColor: "#D1D1D1",
+                    borderRadius: 5,
+                    padding: 10,
+                    marginTop: 28,
+                    fontFamily: 'GothamLight', 
+                    fontSize: 14,
+                    marginHorizontal: 10
+                }}
+                placeholder="694.20" 
+                // value={amount}
+                // onChangeText={text => setAmount(text)}
+            />
             {/* Shop ID Button */}
             <TouchableOpacity 
                 style={{paddingTop: 10,marginTop: 20, marginBottom: 20, margin: 10}}  

@@ -11,75 +11,13 @@ export default function Order() {
         {"name":"Hash brown", "price":"30"}   
     ] 
   return (
-    <View style={{marginTop: 20}}>
-         {/* Menu Header */}
-         <View style={{ flex: 1, justifyContent: 'center', padding: 24, marginTop: 30, marginBottom: 20}}>
-                    <View style={{ flexDirection: 'row', height: 55, backgroundColor: "#ECECEC", borderRadius: 8 }}>
-                        
-                        <TouchableOpacity
-                            style={{ 
-                                flex: 1,
-                                backgroundColor: null, 
-                                borderRadius: 6,
-                            }}
-                            
-                        >
-                            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center',marginRight: 20, justifyContent: 'center' }}>
-                            <Image 
-                                style={{
-                                    width: 20, 
-                                    height: 20, 
-                                }}
-                                tintColor= "#1D256E"
-                                source={require('../../assets/icons/back_arrow_icon.png')} />
-                            </View>
-                        </TouchableOpacity>
+    <View>
 
-                        <TouchableOpacity
-                            style={{ 
-                                flex: 1,
-                                backgroundColor:null, 
-                                margin: 5,
-                                borderRadius: 8,
-                            }}
-                            // onPress={() => NavbarButtonHandler("chart")}
-                        >
-                            <View
-                                style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                <Text style={{ marginLeft: 0, fontSize: 16, fontFamily: 'GothamMedium', lineHeight: 22, color: "black" }}>Orders</Text>
-                            </View>
-                        </TouchableOpacity>
+        <Text style={{ alignSelf: "center", marginBottom: 40, fontSize: 16, fontFamily: 'GothamMedium', color: "black" }}>Current orders going on ......😋 🍔 🍟 🍕</Text>
 
-                        <TouchableOpacity
-                            style={{ 
-                                flex: 1,
-                                backgroundColor: null, 
-                                margin: 5,
-                                borderRadius: 8,
-                            }}
-                            // onPress={() => NavbarButtonHandler("add")}
-                        >
-                            <View
-                                style={{
-                                    flex: 1,
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                               
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                </View>  
                 <View style={{backgroundColor: "#ECECEC", borderRadius: 10, marginHorizontal: 20}}>
                 <Text style={{ marginLeft: 0, fontSize: 22, fontFamily: 'GothamMedium', marginTop: 10, color: "black", textAlign: "center" }}>Table no. 4</Text>
+                <View style={{borderBottomWidth: 1, borderBottomColor: "black", marginHorizontal: 90, marginTop: 10}} />
                   {menu_items.map(item => {
                   return(
                       <View key={item.name}
@@ -147,7 +85,7 @@ export default function Order() {
                         padding: 12,
                         borderRadius: 6,
                     }}>
-                        <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Received by User</Text>
+                        <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Received by User 🖖🏼</Text>
                     </View>
                 </TouchableOpacity>
             </View>
