@@ -102,6 +102,9 @@ app.post('/placeOrder', async (req, res) => {
 
 
 
+
+
+
 /************   Owner    ****************/
 
 // GetOrders
@@ -114,6 +117,7 @@ app.get('/getOrders/:id', async (req, res) => {
     res.send(saareKaam);
 });
 
+// delete Order
 app.delete('/deleteOrder/:id', async (req,res) => {
     const id = req.params.id;
     
@@ -157,7 +161,28 @@ app.get('/login/:id', async (req, res) => {
     // }
 })
 
+// Add Item 
+app.post('/addItem', async (req, res) => {
+    console.log(JSON.stringify(req.body));
+    const obj = req.body;
+
+    const item = new AllItems(obj);
+
+    try {
+        const result = await item.save();          //Asynchronus operation, takes time
+        console.log(result);
+    } catch(e) {   
+        //console.log(e.message);
+        for(field in e.errors)
+        console.log(e.errors[field].message);
+    }
+
+    res.send(obj);
+    return;
+});
+
 /************   Owner-End    ****************/
+
 
 
 

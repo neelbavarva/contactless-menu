@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image , TextInput} from 'react-native';
 
 
-export default function AddItem() {
+export default function AddItem({ AddItemButtonHandler }) {
+
+    const [itemName, setItemName] = useState("");
+    const [itemPrice, setItemPrice] = useState('');
+    const [itemCategory, setItemCategory] = useState("");
+    const [itemImgUrl, setItemImgUrl] = useState("");
+
   return (
     <View style={{marginTop: 20}}>
             <View style={{marginHorizontal: 30}}>
@@ -29,8 +35,8 @@ export default function AddItem() {
                     fontSize: 14,
                 }}
                     placeholder="Enter name here.." 
-                    // value={productName}
-                    // onChangeText={text => setProductName(text)}
+                    value={itemName}
+                    onChangeText={text => setItemName(text)}
                 />
 
                 
@@ -49,8 +55,8 @@ export default function AddItem() {
                         fontSize: 14
                     }}
                     placeholder="694.20" 
-                    // value={amount}
-                    // onChangeText={text => setAmount(text)}
+                    value={itemPrice}
+                    onChangeText={text => setItemPrice(text)}
                 />
 
                 <Text style={styles.Text}>Category</Text>
@@ -67,8 +73,8 @@ export default function AddItem() {
                             fontSize: 14
                         }}
                         placeholder="beverages" 
-                        // value={amount}
-                        // onChangeText={text => setAmount(text)}
+                        value={itemCategory}
+                        onChangeText={text => setItemCategory(text)}
                 />
 
 
@@ -86,21 +92,26 @@ export default function AddItem() {
                             fontSize: 14
                         }}
                         placeholder="http:///" 
-                        // value={amount}
-                        // onChangeText={text => setAmount(text)}
+                        value={itemImgUrl}
+                        onChangeText={text => setItemImgUrl(text)}
                 />
 
 
                 <TouchableOpacity 
                     style={{paddingTop: 10,marginTop: 10, marginBottom: 20}}
-                    // onPress={() => {
-
-                    //     pick()
-                        
-                    // }}
+                    onPress={() => {
+                        console.log("Add Item Button is Pressed!!");
+                        let obj = {
+                            name: itemName,
+                            price: parseInt(itemPrice),
+                            quantity: 1,
+                            imgUrl: itemImgUrl
+                        }   
+                        AddItemButtonHandler(obj);
+                    }}
                 >
                     <View style={styles.button}>
-                        <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Add Product</Text>
+                        <Text style={{color: "white", textAlign: "center", fontFamily: 'GothamMedium'}}>Add Item</Text>
                     </View>
                 </TouchableOpacity>
 

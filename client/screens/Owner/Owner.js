@@ -51,6 +51,32 @@ export default function Owner({ownerId}) {
         });
     }
 
+    const AddItemButtonHandler = (obj) => {
+        console.log("Item to be added:-", obj);
+        fetch(`${myConstClass.HTTP_LINK}/addItem/`,{
+            method:"post",
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+                name: obj.name,
+                price: obj.price,
+                quantity: obj.quantity,
+                restaurantId: ownerId,
+                imgUrl: obj.imgUrl
+            })
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            Alert.alert(`New Item has been Added`);
+            console.log("This is received:-", data);
+        })
+        .catch(err=>{
+            Alert.alert("Some Error while Adding the Item...")
+            console.log(err.message);
+        });
+    }
+
     return (
         <View>
         <View style={{ flex: 1, justifyContent: 'center', padding: 24, marginTop: 30, marginBottom: 20}}>
@@ -122,7 +148,7 @@ export default function Owner({ownerId}) {
                 </View>  
 
                 {viewMode === "orders" && <Orders orders={orders} deleteItemButtonHandler={deleteItemButtonHandler} />}
-                {viewMode === "add" && <AddItem />}
+                {viewMode === "add" && <AddItem AddItemButtonHandler={AddItemButtonHandler} />}
                 {viewMode === "support" && <Support />}
         </View>
     );

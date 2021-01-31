@@ -1,12 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, LogBox, Alert, TextInput, Button } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import jsQR from 'jsqr';
 
 export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
 
     const [image, setImage] = useState(null);
     const [idData, setIdData] = useState(null);
     const [restaurantId, setRestaurantId] = useState(null);
+    const jsQR = require("jsqr");
+
+    // const [isPressed, setIsPressed] = useState(false);
+    // const [hasPermission, setHasPermission] = useState(null);
+    // const [scanned, setScanned] = useState(false);
+
+    // useEffect(() => {
+    //     (async () => {
+    //         const { status } = await BarCodeScanner.requestPermissionsAsync();
+    //         setHasPermission(status === 'granted');
+    //     })();
+    // }, []);
 
     useEffect(() => {
         (async () => {
@@ -23,7 +37,6 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
 
     const clickImage = async () => {
         console.log("Take photo is pressed");
-
         const {status} = await ImagePicker.requestCameraPermissionsAsync();
         console.log(status)
 
@@ -38,6 +51,8 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
     
             if (!result.cancelled) {
                 setImage(result);
+                const code = jsQR(result.base64, result.width, result.height);
+                console.log("This is code data:- ", code);
                 let name = result.uri.split(".")
                 let newfile = {
                   uri:result.uri,
@@ -45,12 +60,11 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
                   name:`test.${name[3]}`
                 }
 
-                setIdData("60154892d9bd758ac9a36d63");
+                setIdData("6015483f3ebd2f8a415a8952");
             }
         } else {
             Alert.alert('Access denied')
         }
-
     }
 
     return (
