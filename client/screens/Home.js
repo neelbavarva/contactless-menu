@@ -51,8 +51,8 @@ export default function Home({GoToMenuButtonHandler, LoginButtonHandler}) {
     
             if (!result.cancelled) {
                 setImage(result);
-                const code = jsQR(result.base64, result.width, result.height);
-                console.log("This is code data:- ", code);
+                // const code = jsQR(result.base64, result.width, result.height);
+                // console.log("This is code data:- ", code);
                 let name = result.uri.split(".")
                 let newfile = {
                   uri:result.uri,
