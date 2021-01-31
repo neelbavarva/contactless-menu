@@ -97,6 +97,14 @@ app.post('/placeOrder', async (req, res) => {
     res.send("accepted");
 })
 
+// app.get('/getQrCodeData/:uri', async (req, res) => {
+    
+//     let data = req.body.uri;
+//     console.log(qr.decode(req.body.uri));
+
+//     res.send(data);
+// });
+
 /************   User-End    ****************/
 
 
