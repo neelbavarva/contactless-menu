@@ -9,8 +9,7 @@
 
 <p>Cafe 29 is a mobile application through which customers can scan a QR code on restaurant table and that restaurant's menu will appear , now customer can add food items to the cart and by going to the cart can place order. Now the restaurant owner will get the orders pending and after serving that order owner can delete that particular table's order.</p>
 
-<br><br><br>
-
+<hr>
 
 <h2>Home Page</h2>
 
